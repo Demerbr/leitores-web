@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Select from '@radix-ui/react-select';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
-import Warning from '../Warning';
-import Button from '../Button';
+import Warning from '../../../../shared/components/Warning';
+import Button from '../../../../shared/components/Button';
+import getNextSundays from '../../utils/getNextSundays';
+import calculateReturnDate from '../../utils/calculateReturnDate';
 
 type LoanPeriod = 'standard' | 'extended';
 
@@ -35,43 +37,21 @@ const LoanRequestModal = ({ isOpen, onClose, onSubmit }: LoanRequestModalProps) 
 
   useEffect(() => {
     if (isOpen) {
-      setupDateOptions();
+      const options = getNextSundays();
+      setSundayOptions(options);
+      setPickupDate(options[0].value);
+      setReturnDate(calculateReturnDate(options[0].value, loanPeriod));
     }
-  }, [isOpen]);
+  }, [isOpen, loanPeriod]);
 
-  const setupDateOptions = () => {
-    const options = getNextSundays();
-    setSundayOptions(options);
-    setPickupDate(options[0].value);
-    updateReturnDate(options[0].value, loanPeriod);
+  const handleLoanPeriodChange = (value: LoanPeriod) => {
+    setLoanPeriod(value);
+    setReturnDate(calculateReturnDate(pickupDate, value));
   };
 
-  const getNextSundays = (): SundayOption[] => {
-    const sundays: SundayOption[] = [];
-    let currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay()) % 7);
-    
-    for (let i = 0; i < 8; i++) {
-      sundays.push({
-        value: currentDate.toISOString().split('T')[0],
-        label: currentDate.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-      });
-      currentDate.setDate(currentDate.getDate() + 7);
-    }
-    
-    return sundays;
-  };
-
-  const updateReturnDate = (selectedPickupDate: string, period: LoanPeriod) => {
-    const pickupDate = new Date(selectedPickupDate);
-    const returnDate = new Date(pickupDate);
-    returnDate.setDate(returnDate.getDate() + (period === 'standard' ? 14 : 28));
-    
-    // Adjust to next Sunday if necessary
-    const daysUntilSunday = (7 - returnDate.getDay()) % 7;
-    returnDate.setDate(returnDate.getDate() + daysUntilSunday);
-    
-    setReturnDate(returnDate.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+  const handlePickupDateChange = (value: string) => {
+    setPickupDate(value);
+    setReturnDate(calculateReturnDate(value, loanPeriod));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -91,10 +71,7 @@ const LoanRequestModal = ({ isOpen, onClose, onSubmit }: LoanRequestModalProps) 
               <label className="block mb-2 font-bold text-primary" htmlFor="loanPeriod">Período de Empréstimo:</label>
               <Select.Root 
                 value={loanPeriod} 
-                onValueChange={(value: LoanPeriod) => {
-                  setLoanPeriod(value);
-                  updateReturnDate(pickupDate, value);
-                }}
+                onValueChange={handleLoanPeriodChange}
               >
                 <Select.Trigger className="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-primary bg-white border border-secondary rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
                   <Select.Value />
@@ -140,10 +117,7 @@ const LoanRequestModal = ({ isOpen, onClose, onSubmit }: LoanRequestModalProps) 
               <label className="block mb-2 font-bold text-primary" htmlFor="pickupDate">Data de Retirada:</label>
               <Select.Root 
                 value={pickupDate} 
-                onValueChange={(value: string) => {
-                  setPickupDate(value);
-                  updateReturnDate(value, loanPeriod);
-                }}
+                onValueChange={handlePickupDateChange}
               >
                 <Select.Trigger className="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-primary bg-white border border-secondary rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
                   <Select.Value />

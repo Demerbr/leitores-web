@@ -10,7 +10,7 @@ import calculateReturnDate from '../../utils/calculateReturnDate';
 
 type LoanPeriod = 'standard' | 'extended';
 
-type LoanRequestData = {
+export type LoanRequestData = {
   loanPeriod: LoanPeriod;
   justification?: string;
   pickupDate: string;

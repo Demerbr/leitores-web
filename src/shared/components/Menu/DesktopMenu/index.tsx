@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 type MenuItem = {
   label: string;
@@ -13,9 +13,10 @@ const DesktopMenu = ({ items }: DesktopMenuProps) => {
   return (
     <nav className="   md:!flex   ">
       <ul className="flex space-x-4">
-        {items.map((item, index) => (
-            <Link 
-            href={item.href} 
+        {items.map((item) => (
+            <Link
+            key={item.label}
+            href={item.href}
             className="
               font-sora 
               px-3 py-2 

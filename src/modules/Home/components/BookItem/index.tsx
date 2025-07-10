@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import LoanRequestModal from '../LoanRequestModal';
+import LoanRequestModal, { LoanRequestData } from '../LoanRequestModal';
 
 type Book = {
   id: number;

@@ -1,5 +1,5 @@
 import { Book } from "@/@types/book";
-import BookItem from "../components/BookItem";
+import BookItem from "../BookItem";
 
 type BookListProps = {
   books: Book[];

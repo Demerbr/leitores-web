@@ -98,7 +98,7 @@ export function HomeModule(){
           onClick={clearFilters}
           className="ml-4 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300"
         >
-          Limpar Filtros
+          Limpar Filtro
         </button>
       </div>
       <BookList 

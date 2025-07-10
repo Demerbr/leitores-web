@@ -57,7 +57,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build with Next.js
-        run: npm run build
+        run: npx --no-install next build
       - name: Export static site
         run: npx --no-install next export
       - name: Upload artifact
@@ -82,4 +82,3 @@ jobs:
         with:
           path: ./out
 
- 

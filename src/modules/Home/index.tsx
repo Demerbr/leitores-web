@@ -1,7 +1,7 @@
 'use client'
 
 import { Book } from "@/@types/book";
-import { BookList } from "@/shared/components/BookList";
+import { BookList } from "@/modules/Home/BookList";
 import FilterBar from "@/shared/components/FilterBar";
 import SearchBar from "@/shared/components/SearchBar";
 import { useCallback, useState } from "react";

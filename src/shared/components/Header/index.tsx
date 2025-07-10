@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <header className="bg-primary text-white">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-4  flex items-center justify-between">
         <div className="flex items-center">
           <Image src="/logo.png" alt="PIB Juscelino Logo" width={48} height={48} className="mr-3" />
           <div>

@@ -92,8 +92,8 @@ export function HomeModule(){
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Catálogo de Livros</h1>
       <div className='flex items-center md:items-start flex-col md:flex-row  md:gap-8 gap-2'>
-        <SearchBar onSearch={handleSearch} />
-        <FilterBar categories={allCategories} onFilter={handleFilter} />
+        <SearchBar onSearch={handleSearch} value={searchQuery} />
+        <FilterBar categories={allCategories} onFilter={handleFilter} selectedCategory={currentCategory} />
         <button 
           onClick={clearFilters}
           className="ml-4 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300"

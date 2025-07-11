@@ -2,8 +2,8 @@
 
 import { Book } from "@/@types/book";
 import { BookList } from "@/modules/Home/components/BookList";
-import FilterBar from "@/shared/components/FilterBar";
-import SearchBar from "@/shared/components/SearchBar";
+import FilterBar from "@/modules/Home/components/FilterBar";
+import SearchBar from "@/modules/Home/components/SearchBar";
 import { useCallback, useState } from "react";
 
 export function HomeModule(){
